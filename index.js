@@ -18,12 +18,12 @@ async function download_posts_from_instagram(username, dir = null) {
     const browser = await puppeteer.launch({
         // For Linux or WSL
 
-        executablePath: "/usr/bin/chromium-browser",
-        args: ["--disable-gpu", "--disable-dev-shm-usage", "--disable-setuid-sandbox", "--no-first-run", "--no-sandbox", "--no-zygote", "--single-process"],
+        //executablePath: "/usr/bin/chromium-browser",
+        //args: ["--disable-gpu", "--disable-dev-shm-usage", "--disable-setuid-sandbox", "--no-first-run", "--no-sandbox", "--no-zygote", "--single-process"],
 
         // For Windows
 
-        // executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
 
         headless: true // Open chrome or not(true means that is off), recommended to be false
     });
