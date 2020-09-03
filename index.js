@@ -12,8 +12,20 @@ const spinner = {
 };
 
 async function download_posts_from_instagram(username, dir = null) {
-    const download_path = dir || username;
-    const url = path.join("https://www.instagram.com/", username);
+    if (!username) return process.exit();
+
+    const download_path = dir || "downloads/" + username;
+    const url = "https://www.instagram.com/" + username;
+
+    const res = await (await fetch(url + "?__a=1")).json();
+
+    if (res === {}) {
+        console.log("[INVALID ACCOUNT]");
+        process.exit();
+    } else if (res.graphql.user.is_private) {
+        console.log("[PRIVATE ACCOUNT]");
+        process.exit();
+    }
 
     const browser = await puppeteer.launch({
         // For Linux or WSL
