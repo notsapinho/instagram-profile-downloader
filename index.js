@@ -14,7 +14,7 @@ const spinner = {
 async function download_posts_from_instagram(username, dir = null) {
     if (!username) return process.exit();
 
-    const download_path = dir || "downloads/" + username;
+    const download_path = dir || path.join("downloads/" + username);
     const url = "https://www.instagram.com/" + username;
 
     const res = await (await fetch(url + "?__a=1")).json();
