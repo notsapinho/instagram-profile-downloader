@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0",
     "ora": "^5.0.0",
     "puppeteer": "^3.3.0"
