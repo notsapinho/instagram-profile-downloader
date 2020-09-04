@@ -20,7 +20,7 @@ async function download_posts_from_instagram(username, hl = false, dir = null) {
 
     const res = await (await fetch(url + "?__a=1")).json();
 
-    if (res === {} || !res) {
+    if ((Object.keys(res).length === 0 && res.constructor === Object) || !res) {
         console.log("[INVALID ACCOUNT]");
         process.exit();
     } else if (res && res.graphql.user.is_private) {
