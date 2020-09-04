@@ -7,7 +7,7 @@ You can use this application to download posts from accounts. `(We don't support
 
 ## Instructions
 
-### Downloading
+### Downloading and Running
 
 -   Download the source or clone the repo with `git clone`.
 -   Install [`NodeJS`](https://nodejs.org).
