@@ -21,7 +21,7 @@ async function get_data_from(url, title) {
     const data = await response.arrayBuffer();
     const extension = "." + response.headers.get("content-type").split("/")[1];
 
-    return { data: data, extension: extension, title };
+    return { data, extension, title };
 }
 
 async function get_posts_from_instagram(page, timeout = 3000) {
