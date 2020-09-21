@@ -24,19 +24,19 @@ async function get_data_from(url, title) {
     return { data: data, extension: extension, title };
 }
 
-async function get_posts_from_instagram(page, timeout = 3000) {
+async function get_posts_from_instagram(page, cookies, timeout = 3000) {
     const posts = await page.evaluate(get_posts_hrefs, timeout);
 
-    return await download(await get_srcs_from_posts(posts));
+    return await download(await get_srcs_from_posts(posts, cookies));
 }
 
-async function get_srcs_from_posts(posts) {
+async function get_srcs_from_posts(posts, cookies) {
     const srcs = [];
 
     for (let i = 0; i < posts.length; i++) {
         const href = posts[i];
 
-        const res = await (await fetch(`${href}?__a=1`)).json();
+        const res = await (await fetch(`${href}?__a=1`, { headers: { Cookie: cookies } })).json();
 
         if (res.graphql.shortcode_media.edge_sidecar_to_children) {
             srcs.push(res.graphql.shortcode_media.edge_sidecar_to_children.edges.map((x) => (x.node.is_video ? x.node.video_url : x.node.display_url)));
@@ -76,7 +76,7 @@ async function get_posts_hrefs(timeout) {
     return urls;
 }
 
-async function get_highlights_srcs(stories) {
+async function get_highlights_srcs(stories, cookies) {
     const res = await (
         await fetch(
             `https://www.instagram.com/graphql/query/?query_hash=90709b530ea0969f002c86a89b4f2b8d&variables={"reel_ids":[],"tag_names":[],"location_ids":[],"highlight_reel_ids":${JSON.stringify(
@@ -88,7 +88,7 @@ async function get_highlights_srcs(stories) {
                     "x-ig-capabilities": "3w==",
                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0",
                     Host: "i.instagram.com",
-                    Cookie: `sessionid=${process.env.SESSION_ID}; ds_user_id=${process.env.USER_ID};`
+                    Cookie: cookies
                 }
             }
         )
@@ -97,7 +97,7 @@ async function get_highlights_srcs(stories) {
     return res.data.reels_media.map((x) => ({ title: x.id, srcs: x.items.map((y) => (y.is_video ? y.video_resources[0].src : y.display_url)).flat() }));
 }
 
-async function get_highlights(id) {
+async function get_highlights(id, cookies) {
     const res = await (
         await fetch(
             `https://www.instagram.com/graphql/query/?query_hash=d4d88dc1500312af6f937f7b804c68c3&variables={"user_id":"${id}","include_chaining":false,"include_reel":false,"include_suggested_users":false,"include_logged_out_extras":false,"include_highlight_reels":true,"include_related_profiles":false}`,
@@ -107,7 +107,7 @@ async function get_highlights(id) {
                     "x-ig-capabilities": "3w==",
                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0",
                     Host: "i.instagram.com",
-                    Cookie: `sessionid=${process.env.SESSION_ID}; ds_user_id=${process.env.USER_ID};`
+                    Cookie: cookies
                 }
             }
         )

@@ -5,13 +5,14 @@ const fs = require("fs");
 const path = require("path");
 const puppeteer = require("puppeteer");
 const readline = require("readline");
+const PuppeteerInstagram = require("./puppeteer-instagram");
 
 const spinner = {
     interval: 60,
     frames: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
 };
 
-async function download_posts_from_instagram(username, hl = false, dir = null) {
+async function download_posts_from_instagram(username, hl = true, dir = null) {
     if (!username) return process.exit();
 
     const download_path = dir || path.join("downloads/", username);
@@ -23,22 +24,14 @@ async function download_posts_from_instagram(username, hl = false, dir = null) {
     if ((Object.keys(res).length === 0 && res.constructor === Object) || !res) {
         console.log("[INVALID ACCOUNT]");
         process.exit();
-    } else if (res && res.graphql.user.is_private) {
-        console.log("[PRIVATE ACCOUNT]");
-        process.exit();
     }
 
     const browser = await puppeteer.launch({
-        // For Linux or WSL
-
-        //executablePath: "/usr/bin/chromium-browser",
-        //args: ["--disable-gpu", "--disable-dev-shm-usage", "--disable-setuid-sandbox", "--no-first-run", "--no-sandbox", "--no-zygote", "--single-process"],
-
         // For Windows
 
-        executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
 
-        headless: true // Open chrome or not(true means that is off), recommended to be false
+        headless: false
     });
 
     const page = await browser.newPage();
@@ -49,7 +42,13 @@ async function download_posts_from_instagram(username, hl = false, dir = null) {
     }).start();
 
     page.setDefaultNavigationTimeout(0);
+    const instagram = new PuppeteerInstagram({ browser });
+
+    await instagram.signin({ username: process.env.USERNAME, password: process.env.PASSWORD });
+
     await page.goto(url);
+
+    const cookies = (await page.cookies()).map((x) => `${x.name}=${x.value}`).join(";");
 
     dataLog.succeed("[DATA COLLECTED]");
 
@@ -58,7 +57,7 @@ async function download_posts_from_instagram(username, hl = false, dir = null) {
         spinner
     }).start();
 
-    const posts = await get_posts_from_instagram(page, 3000);
+    const posts = await get_posts_from_instagram(page, cookies, 3000);
 
     postsLog.succeed("[POSTS DOWNLOADED]");
 
@@ -86,7 +85,7 @@ async function download_posts_from_instagram(username, hl = false, dir = null) {
             spinner
         }).start();
 
-        const highlights = await get_highlights_srcs(await get_highlights(res.logging_page_id.replace("profilePage_", "")));
+        const highlights = await get_highlights_srcs(await get_highlights(res.logging_page_id.replace("profilePage_", ""), cookies), cookies);
 
         getHighlights.succeed("[GOT HIGHLIGHTS]");
 

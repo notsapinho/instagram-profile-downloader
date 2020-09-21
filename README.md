@@ -1,7 +1,7 @@
 # instaposts-downloader
 Simple app to download instagram account posts.
 
-You can use this application to download posts from accounts. `(We don't support private accounts yet)`
+You can use this application to download posts from accounts. `(We support private accounts!)`
 
 <hr></hr>
 
@@ -13,6 +13,12 @@ You can use this application to download posts from accounts. `(We don't support
 -   Install [`NodeJS`](https://nodejs.org).
 -   After installing [`NodeJS`](https://nodejs.org) run `npm i` in the terminal to install the dependencies.
 -   Run the app with `node index.js`, write the `username` and press enter.
+
+### Privates accounts and highlights
+
+-   Create a `.env` file and follow the `.env.example` example.
+-   The app you login to your account and get your session so it can get private accounts and highlights.
+-   Don't worry we will not steal your account.
 
 ## Any problems?
 Contact me on Discord `notsapinho#2975`
