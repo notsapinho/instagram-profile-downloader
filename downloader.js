@@ -1,5 +1,4 @@
 const fetch = require("node-fetch");
-require("dotenv/config");
 
 async function download(srcs) {
     const res = [];

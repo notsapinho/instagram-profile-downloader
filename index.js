@@ -6,6 +6,7 @@ const path = require("path");
 const puppeteer = require("puppeteer");
 const readline = require("readline");
 const PuppeteerInstagram = require("./puppeteer-instagram");
+require("dotenv/config");
 
 const spinner = {
     interval: 60,
@@ -44,7 +45,7 @@ async function download_posts_from_instagram(username, hl = true, dir = null) {
     page.setDefaultNavigationTimeout(0);
     const instagram = new PuppeteerInstagram({ browser });
 
-    await instagram.signin({ username: process.env.USERNAME, password: process.env.PASSWORD });
+    await instagram.signin({ username: process.env.USER, password: process.env.PASSWORD });
 
     await page.goto(url);
 
