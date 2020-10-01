@@ -32,7 +32,7 @@ async function download_posts_from_instagram(username, hl = true, dir = null) {
 
         executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
 
-        headless: false
+        headless: true
     });
 
     const page = await browser.newPage();
