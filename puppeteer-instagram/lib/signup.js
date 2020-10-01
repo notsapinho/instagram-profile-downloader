@@ -1,7 +1,7 @@
 'use strict'
 
-const delay = require('puppeteer-instagram/lib/node_modules/delay')
-const random = require('puppeteer-instagram/lib/node_modules/random')
+const delay = require('delay')
+const random = require('random')
 
 module.exports = async (browser, user, opts) => {
   const page = await browser.newPage()

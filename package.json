@@ -1,21 +1,28 @@
 {
-  "name": "instaposts-downloader",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "faker": "^5.1.0",
-    "node-fetch": "^2.6.1",
-    "ora": "^5.0.0",
-    "ow": "^0.17.0",
-    "puppeteer": "^3.3.0",
-    "puppeteer-extra": "^3.1.15",
-    "puppeteer-extra-plugin-stealth": "^2.6.1"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "notsapinho"
+    "name": "instaposts-downloader",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.2",
+        "delay": "^3.0.0",
+        "dotenv": "^8.2.0",
+        "faker": "^4.1.0",
+        "node-fetch": "^2.6.1",
+        "ora": "^5.0.0",
+        "ow": "^0.6.0",
+        "p-map": "^1.2.0",
+        "p-retry": "^2.0.0",
+        "parse-email": "^1.0.0",
+        "puppeteer": "^3.3.0",
+        "puppeteer-email": "^0.1.0",
+        "puppeteer-extra": "^3.1.15",
+        "puppeteer-extra-plugin-stealth": "^2.6.1",
+        "random": "^2.0.12"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "notsapinho"
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-const delay = require('puppeteer-instagram/lib/node_modules/delay')
+const delay = require('delay')
 
 module.exports = async (browser, user, opts) => {
   const page = await browser.newPage()
