@@ -1,4 +1,4 @@
-# instaposts-downloader
+# instagram-profile-downloader
 Simple app to download instagram account posts.
 
 You can use this application to download posts from accounts. `(We support private accounts!)`
