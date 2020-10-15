@@ -2,18 +2,18 @@
     "name": "instaposts-downloader",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "src/index.js",
     "dependencies": {
-        "cheerio": "^1.0.0-rc.2",
+        "async": "^3.2.0",
         "delay": "^3.0.0",
         "dotenv": "^8.2.0",
         "node-fetch": "^2.6.1",
         "ora": "^5.1.0",
         "ow": "^0.6.0",
         "puppeteer": "^3.3.0",
-        "puppeteer-email": "^0.1.0",
         "puppeteer-extra": "^3.1.15",
-        "puppeteer-extra-plugin-stealth": "^2.6.2"
+        "puppeteer-extra-plugin-stealth": "^2.6.2",
+        "request": "^2.88.2"
     },
     "devDependencies": {},
     "scripts": {
