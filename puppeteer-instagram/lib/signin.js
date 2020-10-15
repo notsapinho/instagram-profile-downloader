@@ -1,5 +1,3 @@
-"use strict";
-
 const delay = require("delay");
 
 module.exports = async (browser, user, opts) => {

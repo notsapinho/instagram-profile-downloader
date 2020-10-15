@@ -7,18 +7,13 @@
         "cheerio": "^1.0.0-rc.2",
         "delay": "^3.0.0",
         "dotenv": "^8.2.0",
-        "faker": "^4.1.0",
         "node-fetch": "^2.6.1",
-        "ora": "^5.0.0",
+        "ora": "^5.1.0",
         "ow": "^0.6.0",
-        "p-map": "^1.2.0",
-        "p-retry": "^2.0.0",
-        "parse-email": "^1.0.0",
         "puppeteer": "^3.3.0",
         "puppeteer-email": "^0.1.0",
         "puppeteer-extra": "^3.1.15",
-        "puppeteer-extra-plugin-stealth": "^2.6.1",
-        "random": "^2.0.12"
+        "puppeteer-extra-plugin-stealth": "^2.6.2"
     },
     "devDependencies": {},
     "scripts": {

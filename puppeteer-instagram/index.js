@@ -1,11 +1,8 @@
-const faker = require("faker");
 const ow = require("ow");
 const puppeteer = require("puppeteer-extra");
 
-const signup = require("./lib/signup");
 const signin = require("./lib/signin");
 const signout = require("./lib/signout");
-const verifyEmail = require("./lib/verify-email");
 
 puppeteer.use(require("puppeteer-extra-plugin-stealth")());
 
@@ -54,54 +51,6 @@ class PuppeteerInstagram {
     }
 
     /**
-     * Automates the creation of a new Instagram account.
-     *
-     * @param {object} user - User details for new account
-     * @param {string} user.email - Email
-     * @param {string} [user.username] - Username
-     * @param {string} [user.firstName] - First name
-     * @param {string} [user.lastName] - Last name
-     * @param {string} [user.password] - Password
-     * @param {object} [opts={ }] - Options
-     * @param {boolean} [opts.verify] - Whether or not to verify email
-     * @param {string} [opts.emailPassword] - Email password for verification
-     * @return {Promise}
-     */
-    async signup(user, opts = {}) {
-        if (this.isAuthenticated) throw new Error('"signup" requires no authentication');
-        ow(user, ow.object.plain.nonEmpty.label("user"));
-        ow(user.email, ow.string.nonEmpty.label("user.email"));
-
-        user.username = user.username || user.email.split("@")[0];
-        user.password = user.password || faker.internet.password();
-        user.firstName = user.firstName || faker.name.firstName();
-        user.lastName = user.lastName || faker.name.lastName();
-
-        user.username = user.username
-            .trim()
-            .toLowerCase()
-            .replace(/[^\d\w-]/g, "-")
-            .replace(/_/g, "-")
-            .replace(/^-/g, "")
-            .replace(/-$/g, "")
-            .replace(/--/g, "-");
-
-        ow(user.username, ow.string.nonEmpty.label("user.username"));
-        ow(user.password, ow.string.nonEmpty.label("user.password"));
-        ow(user.firstName, ow.string.nonEmpty.label("user.firstName"));
-        ow(user.lastName, ow.string.nonEmpty.label("user.lastName"));
-
-        const browser = await this.browser();
-        await signup(browser, user, opts);
-
-        this._user = user;
-
-        if (opts.verify) {
-            await this.verifyEmail(opts);
-        }
-    }
-
-    /**
      * Signs into an existing Instagram account.
      *
      * Note: either username or email is required.
@@ -141,29 +90,6 @@ class PuppeteerInstagram {
 
         await signout(browser, this._user);
         this._user = null;
-    }
-
-    /**
-     * Verifies the authenticated Instagram account's email via `puppeteer-email`.
-     *
-     * @param {Object} opts - Options
-     * @param {string} opts.emailPassword - Email password for verification
-     * @param {string} [opts.email] - Email verification (defaults to user's GitHub email)
-     * @return {Promise}
-     */
-    async verifyEmail(opts) {
-        ow(opts, ow.object.plain.nonEmpty.label("opts"));
-        ow(opts.emailPassword, ow.string.nonEmpty.label("opts.emailPassword"));
-
-        const browser = await this.browser();
-        await verifyEmail(
-            browser,
-            {
-                email: opts.email || this.user.email,
-                password: opts.emailPassword
-            },
-            opts
-        );
     }
 
     /**
