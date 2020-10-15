@@ -12,7 +12,7 @@ You can use this application to download posts from accounts. `(We support priva
 -   Download the source or clone the repo with `git clone`.
 -   Install [`NodeJS`](https://nodejs.org).
 -   After installing [`NodeJS`](https://nodejs.org) run `npm i` in the terminal to install the dependencies.
--   Run the app with `node index.js`, write the `username` and press enter.
+-   Run the app with `node src/index.js`, write the `username` and press enter.
 
 ### Privates accounts and highlights
 
