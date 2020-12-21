@@ -48,6 +48,7 @@ class Scraper {
             if (urls.length >= limit && limit != 0) {
                 time = timeout / 100 - 1;
                 urls = urls.slice(0, limit);
+                break;
             }
 
             await new Promise((resolve) => setTimeout(resolve, 100));
