@@ -21,6 +21,10 @@ You can use this application to download posts from accounts. `(We support priva
 -   The app you login to your account and get your session so it can get private accounts and highlights.
 -   Don't worry we will not steal your account.
 
+### Demo
+
+<img src="https://i.imgur.com/xa5XbdO.gif">
+
 ## Any problems?
 
 Contact me on Discord `notsapinho#2975`
