@@ -73,6 +73,7 @@ class InstagramDownloader {
             await this.downloader.q.drain();
         } else {
             const len = srcs.map((x) => x.srcs).flat().length;
+            if(!len) return;
             this.bar = new ProgressBar("[HIGHLIGHTS] [:bar] :current/:total :etas", { width: 20, total: len });
             this.log.start(this.bar.render());
             if (!fs.existsSync(this.highlight_path)) fs.mkdirSync(this.highlight_path);
