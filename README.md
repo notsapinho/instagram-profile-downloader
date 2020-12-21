@@ -23,8 +23,8 @@ You can use this application to download posts from accounts. `(We support priva
 
 ### Demo
 
-<img width="600" src="https://i.imgur.com/0eJzTPC.gif">
-<img width="600" src="https://i.imgur.com/PiGTbt6.png">
+<img width="800" src="https://i.imgur.com/0eJzTPC.gif">
+<img width="800" src="https://i.imgur.com/PiGTbt6.png">
 
 ## Any problems?
 
