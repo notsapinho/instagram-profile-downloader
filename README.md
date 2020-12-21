@@ -1,4 +1,5 @@
 # instagram-profile-downloader
+
 Simple app to download instagram whole accounts.
 
 You can use this application to download posts from accounts. `(We support private accounts!)`
@@ -21,4 +22,5 @@ You can use this application to download posts from accounts. `(We support priva
 -   Don't worry we will not steal your account.
 
 ## Any problems?
+
 Contact me on Discord `notsapinho#2975`

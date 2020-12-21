@@ -11,13 +11,8 @@ class Scraper {
         return await this.get_highlights_srcs(highlights);
     }
 
-    async get_posts_from_instagram() {
-        const posts = await this.client.page.evaluate(this.get_posts_hrefs, 3000);
-
-        if (!posts.length) {
-            console.log("[NO POSTS]");
-            process.exit();
-        }
+    async get_posts_from_instagram(limit) {
+        const posts = await this.client.page.evaluate(this.get_posts_hrefs, 3000, limit);
 
         return await this.get_srcs_from_posts(posts);
     }
@@ -42,13 +37,18 @@ class Scraper {
         return srcs.flat();
     }
 
-    async get_posts_hrefs(timeout) {
+    async get_posts_hrefs(timeout, limit) {
         let urls = [];
         let time = 0;
         let height = 0;
 
         while (time < timeout / 100) {
             window.scrollTo(0, document.body.scrollHeight);
+
+            if (urls.length >= limit && limit != 0) {
+                time = timeout / 100 - 1;
+                urls = urls.slice(0, limit);
+            }
 
             await new Promise((resolve) => setTimeout(resolve, 100));
             time++;

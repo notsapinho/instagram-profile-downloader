@@ -2,7 +2,9 @@ const fetch = require("node-fetch");
 const logger = require("ora");
 const fs = require("fs");
 const path = require("path");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+puppeteer.use(StealthPlugin());
 const readline = require("readline");
 const PuppeteerInstagram = require("./puppeteer-instagram");
 const Scraper = require("./Scraper");
@@ -90,23 +92,30 @@ const input = readline.createInterface({
 input.question("[USERNAME]: ", async (username, hl = true, dir = null) => {
     const client = new InstagramDownloader(username, dir);
 
-    await client.init();
+    input.question("[POSTS LIMIT (0 for all)]: ", async (limit = 0) => {
+        await client.init();
 
-    client.log.start("[COLLECTING POSTS]");
-    const posts = await client.scraper.get_posts_from_instagram();
-    client.log.succeed("[POSTS COLLECTED]");
+        client.log.start("[COLLECTING POSTS]");
+        const posts = await client.scraper.get_posts_from_instagram(parseInt(limit));
 
-    await client.download(posts, "posts");
+        if (posts.length) {
+            client.log.succeed("[POSTS COLLECTED]");
+            await client.download(posts, "posts");
+        } else client.log.warn("[NO POSTS]");
 
-    if (hl) {
-        client.log.start("[COLLECTING HIGHLIGHTS]");
-        const highlights = await client.scraper.get_highlights_from_instagram();
-        client.log.succeed("[HIGHLIGHTS COLLECTED]");
+        if (hl) {
+            client.log.start("[COLLECTING HIGHLIGHTS]");
+            const highlights = await client.scraper.get_highlights_from_instagram();
 
-        await client.download(highlights, "highlights");
-    }
+            if (highlights.length) {
+                client.log.succeed("[HIGHLIGHTS COLLECTED]");
+                await client.download(highlights, "highlights");
+            } else client.log.warn("[NO HIGHLIGHTS]");
+        }
 
-    client.log.succeed("[DOWNLOADED]");
+        client.log.succeed("[DONE]");
 
-    process.exit();
+        input.close();
+        process.exit();
+    });
 });
