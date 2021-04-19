@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "outDir": "dist",
+        "lib": ["ES2019", "DOM"],
+        "target": "ES2019",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "noUnusedLocals": true
+    },
+    "include": ["src/**/*.ts"]
+}
