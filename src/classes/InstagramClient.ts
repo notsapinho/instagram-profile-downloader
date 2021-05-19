@@ -100,7 +100,7 @@ export default class InstagramClient {
 
         this.downloader.downloadFiles(highlights.map(({ src, title }, i) => ({ title, src, dir: download_path, i, len: highlights.length, type: "HIGHLIGHTS" })));
 
-        await this.downloader.q.drain();    
+        await this.downloader.q.drain();
     }
 
     async getUserHighlightsSrcs(user: UserRepositorySearchResponseUsersItem | UserRepositoryInfoResponseUser, limit?: number | string) {
@@ -144,9 +144,11 @@ export default class InstagramClient {
 
         while (media.isMoreAvailable()) {
             highlights.push(...(await media.items()));
+            if (highlights.length >= limit) {
+                highlights.splice(Number(limit));
+                break;
+            }
         }
-
-        if (limit) highlights.splice(Number(limit));
 
         let pseudoI = 0;
 
@@ -171,9 +173,11 @@ export default class InstagramClient {
 
         while (feed.isMoreAvailable()) {
             posts.push(...(await feed.items()));
+            if (posts.length >= limit) {
+                posts.splice(Number(limit));
+                break;
+            }
         }
-
-        if (limit) posts.splice(Number(limit));
 
         return posts;
     }
